@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron");
+
 window.addEventListener("DOMContentLoaded", async () => {
   const lists = document.querySelector("#lists");
 
@@ -68,4 +70,8 @@ window.addEventListener("DOMContentLoaded", async () => {
         list.children[i].remove();
     }*/
   });
+
+  function addTask(){
+    ipcRenderer.send('openChildWindow');
+  }
 });

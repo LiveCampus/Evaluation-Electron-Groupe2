@@ -10,7 +10,7 @@ const lists = new List(db);
 const tasks = new Task(db);
 
 const createWindow = () => {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     webPreferences: {
@@ -18,11 +18,30 @@ const createWindow = () => {
     },
   });
 
-  win.setMenuBarVisibility(false);
-  win.loadFile("src/views/index.html");
+  mainWindow.setMenuBarVisibility(false);
+  mainWindow.loadFile("src/views/index.html");
 
-  return win;
+  return mainWindow;
 };
+
+const createChildWindow = () => {
+  const childWindow = new BrowserWindow({
+    width: 400,
+    height: 400,
+    show: false,
+    parent: mainWindow,
+    webPreferences: {
+      preload:path.join(app.getAppPath(), 'preloads/preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableRemoteModule: false
+    },
+  })
+  childWindow.loadFile('views/template.html')
+  childWindow.once("ready-to-show", () => {
+    childWindow.show();
+  });
+}
 
 app.on("ready", () => {
   let window = createWindow();
@@ -30,6 +49,10 @@ app.on("ready", () => {
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) window = createWindow();
   });
+
+  ipcMain.on("openChildWindow", (event, arg) =>{
+    createChildWindow();
+  })
 
   ipcMain.on("list:read", async () => {
     let data = await lists.getAll();
