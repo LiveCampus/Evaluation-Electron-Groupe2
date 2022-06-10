@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Kanban - Groupe 2</title>
   </head>
-  <body class="text-gray-700 p-5">
+  <body class="bg-slate-100 text-gray-700 p-5">
     <div class="flex items-center space-x-5">
       <h1 class="font-bold text-xl">Kanban Board</h1>
       <button class="text-white bg-green-400 px-3 py-1 rounded">
         Add Item
       </button>
     </div>
+
+    <div id="lists" class="flex justify-between items-center mt-6 space-x-5"></div>
 
     <script src="../renderers/renderer.js"></script>
   </body>
