@@ -5,11 +5,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
   </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>, Chromium
-    <span id="chrome-version"></span>, and Electron
-    <span id="electron-version"></span>.
+  <body class="text-gray-700 p-5">
+    <div class="flex items-center space-x-5">
+      <h1 class="font-bold text-xl">Kanban Board</h1>
+      <button class="text-white bg-green-400 px-3 py-1 rounded">
+        Add Item
+      </button>
+    </div>
+
     <script src="../renderers/renderer.js"></script>
   </body>
 </html>
