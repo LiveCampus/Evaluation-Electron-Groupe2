@@ -1,9 +1,10 @@
-const { app, BrowserWindow, ipcMain} = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
-const Database = require('./model/Database');
-const List = require('./model/List');
 
-const db = new Database('kanban.db');
+const Database = require("./model/Database");
+const List = require("./model/List");
+
+const db = new Database("kanban.db");
 const lists = new List(db);
 
 const createWindow = () => {
@@ -21,23 +22,20 @@ const createWindow = () => {
   return win;
 };
 
-let window;
 app.on("ready", () => {
-  window = createWindow();
+  let window = createWindow();
 
   app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) window = createWindow();
+  });
+
+  ipcMain.on("list:read", async () => {
+    let data = await lists.getAll();
+
+    window.webContents.send("async:list:read", data);
   });
 });
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
-
-ipcMain.on('list:read', (e, data) => {
-  lists.getListsWithTaskCount().then(
-      data => {
-        window.webContents.send('async:list:read', data)
-      }
-  )
-})

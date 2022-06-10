@@ -1,17 +1,17 @@
-const sqlite3 = require('sqlite3');
+const sqlite3 = require("sqlite3");
 
 class Database {
-    constructor(name) {
-        this.name = name;
-    }
+  constructor(name) {
+    this.name = name;
+  }
 
-    connect() {
-        try {
-            return new sqlite3.Database(this.name)
-        } catch (e) {
-            return e
-        }
+  connect() {
+    try {
+      return new sqlite3.Database(this.name);
+    } catch (e) {
+      return e;
     }
+  }
 }
 
-module.exports = Database
+module.exports = Database;
