@@ -52,8 +52,13 @@ window.addEventListener("DOMContentLoaded", async () => {
   window.api.receive("async:task:read", (data) => {
     for (let i = 0; i < data.length; i++) {
       const newCard = document.createElement("div");
-
-      newCard.classList.add("bg-white", "p-4", "w-full", "my-1");
+      const newBtn = document.createElement("button");
+      let newDetail = document.createElement("img");
+      
+      newCard.classList.add("bg-white", "p-4", "w-full", "my-1", "flex", "justify-between", "items-center");
+      newBtn.classList.add("me-2", "pt-1");
+      newDetail.src = '../assets/images/Details.png';
+      newDetail.classList.add("h-4");
 
       newCard.innerText = `${data[i].title}`;
 
@@ -65,6 +70,8 @@ window.addEventListener("DOMContentLoaded", async () => {
         }
       });
 
+      newBtn.append(newDetail);
+      newCard.append(newBtn);
       list.append(newCard);
     }
   });
