@@ -3,8 +3,8 @@ const path = require("path");
 
 const createWindow = (parent) => {
   const addTaskWindow = new BrowserWindow({
-    height: 400,
-    width: 400,
+    height: 480,
+    width: 720,
     parent,
     webPreferences: {
       preload: path.join(__dirname, "preloads/preload.addTask.js"),
