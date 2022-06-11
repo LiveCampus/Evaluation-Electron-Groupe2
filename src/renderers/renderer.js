@@ -1,7 +1,6 @@
-const { ipcRenderer } = require("electron");
-
 window.addEventListener("DOMContentLoaded", async () => {
   const lists = document.querySelector("#lists");
+  const addTask = document.querySelector("#addTask");
 
   window.api.send("list:read");
   window.api.receive("async:list:read", (data) => {
@@ -46,6 +45,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     window.api.send("task:read");
   });
 
+  addTask.addEventListener("click", () => {
+    window.api.send("window:addTask:open");
+  });
+
   window.api.receive("async:task:read", (data) => {
     for (let i = 0; i < data.length; i++) {
       const newCard = document.createElement("div");
@@ -64,14 +67,5 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       list.append(newCard);
     }
-
-    /*for (let j = 0; j < list.children.length; j++) {
-      if (list.children[i] && list.children[i].classList.contains("no-tasks"))
-        list.children[i].remove();
-    }*/
   });
-
-  function addTask(){
-    ipcRenderer.send('openChildWindow');
-  }
 });

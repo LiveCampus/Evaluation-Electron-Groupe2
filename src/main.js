@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const { createAddTaskWindow } = require("./addTask");
 
 const Database = require("./model/Database");
 const List = require("./model/List");
@@ -24,25 +25,6 @@ const createWindow = () => {
   return mainWindow;
 };
 
-const createChildWindow = () => {
-  const childWindow = new BrowserWindow({
-    width: 400,
-    height: 400,
-    show: false,
-    parent: mainWindow,
-    webPreferences: {
-      preload:path.join(app.getAppPath(), 'preloads/preload.js'),
-      nodeIntegration: false,
-      contextIsolation: true,
-      enableRemoteModule: false
-    },
-  })
-  childWindow.loadFile('views/template.html')
-  childWindow.once("ready-to-show", () => {
-    childWindow.show();
-  });
-}
-
 app.on("ready", () => {
   let window = createWindow();
 
@@ -50,9 +32,9 @@ app.on("ready", () => {
     if (BrowserWindow.getAllWindows().length === 0) window = createWindow();
   });
 
-  ipcMain.on("openChildWindow", (event, arg) =>{
-    createChildWindow();
-  })
+  ipcMain.on("window:addTask:open", () => {
+    createAddTaskWindow(window);
+  });
 
   ipcMain.on("list:read", async () => {
     let data = await lists.getAll();
