@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Notification} = require("electron");
+const { app, BrowserWindow, ipcMain, Notification, Menu, MenuItem} = require("electron");
 const path = require("path");
 const { createAddTaskWindow } = require("./addTask");
 
@@ -51,6 +51,27 @@ app.on("ready", () => {
 
     window.webContents.send("async:task:read", data);
   });
+
+  ipcMain.on('contextMenu:open', (e, data) => {
+    const newMenu = new Menu();
+    newMenu.append(
+      new MenuItem({
+        label: 'Update',
+        click: () => console.log('modifier')
+     })
+    );
+
+    newMenu.append(
+        new MenuItem({
+          label: 'Delete',
+          click: () => console.log('supprimer')
+        })
+    );
+
+    newMenu.popup({
+      window: BrowserWindow.fromWebContents(e.sender)
+    })
+  })
 
   ipcMain.on("task:add", async (e, data) => {
     const notif = new Notification({

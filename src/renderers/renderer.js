@@ -59,6 +59,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       newBtn.classList.add("me-2", "pt-1");
       newDetail.src = '../assets/images/Details.png';
       newDetail.classList.add("h-4");
+      newDetail.setAttribute("id", `${data[i].id}`)
 
       newCard.innerText = `${data[i].title}`;
 
@@ -74,5 +75,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       newCard.append(newBtn);
       list.append(newCard);
     }
+
+    Array.from(document.querySelectorAll('img')).map((img) => {
+      console.log(img)
+      img.addEventListener('click', () => {
+        window.api.send('contextMenu:open', img.getAttribute('id'))
+      })
+    })
   });
 });
