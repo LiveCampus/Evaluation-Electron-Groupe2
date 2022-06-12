@@ -6,13 +6,14 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     const data = {
       title: this.elements.title.value,
+      description: this.elements.desc.value,
       idList: this.elements.list.value,
     };
 
     window.api.send("task:add", data);
   });
 
-  document.querySelector('#cancel').addEventListener('click', () => {
-    window.api.send('window:addTask:close')
-  })
+  document.querySelector("#cancel").addEventListener("click", () => {
+    window.api.send("window:addTask:close");
+  });
 });
