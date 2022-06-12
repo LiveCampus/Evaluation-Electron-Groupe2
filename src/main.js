@@ -50,8 +50,8 @@ app.on("ready", () => {
 
   ipcMain.on("task:add", async (_, data) => {
     let res = await tasks.add(data);
-    console.log(res);
 
+    window.reload();
     window.webContents.send("async:task:add", res);
   });
 });
