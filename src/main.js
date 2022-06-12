@@ -82,9 +82,15 @@ app.on("ready", () => {
           );
 
           if (response !== false) {
+            const notif = new Notification({
+              title: "Tâche supprimée",
+              body: "Cette tâche a été supprimée avec succès",
+              icon: "src/assets/images/Deleted.png",
+            });
             await tasks.deleteTask(data);
 
             window.reload();
+            notif.show();
           }
         },
       })
