@@ -14,6 +14,22 @@ class Task {
       });
     });
   }
+
+  add(data) {
+    return new Promise((resolve, reject) => {
+      this.db.run(
+        "INSERT INTO Task(id, title, rank, idList) VALUES (NULL, ?, IFNULL((SELECT MAX(rank) + 1 FROM Task), 0), ?)",
+        [data.title, data.idList],
+        (err, _) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        }
+      );
+    });
+  }
 }
 
 module.exports = Task;

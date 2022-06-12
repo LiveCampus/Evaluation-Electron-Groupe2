@@ -47,6 +47,13 @@ app.on("ready", () => {
 
     window.webContents.send("async:task:read", data);
   });
+
+  ipcMain.on("task:add", async (_, data) => {
+    let res = await tasks.add(data);
+    console.log(res);
+
+    window.webContents.send("async:task:add", res);
+  });
 });
 
 app.on("window-all-closed", () => {

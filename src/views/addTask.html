@@ -7,22 +7,37 @@
   </head>
   <body>
     <h1 class="p-3 text-lg font-bold">Create New Task</h1>
-    <hr>
+    <hr />
 
     <form class="p-5">
-
       <label class="block w-full" for="title">
-        <span class="block text-base font-medium text-slate-700">Title</span>  
-        <input class="peer-focus w-full bg-slate-100 rounded px-2 py-1" type="text" id="title" name="title" placeholder="Enter title" required>
+        <span class="block text-base font-medium text-slate-700">Title</span>
+        <input
+          class="peer-focus w-full bg-slate-100 rounded px-2 py-1"
+          type="text"
+          name="title"
+          placeholder="Enter title"
+          required
+        />
       </label>
-     
+
       <label class="block w-full pt-5" for="desc">
-        <span class="block text-base font-medium text-slate-700">Description</span> 
-        <textarea class="peer-focus w-full bg-slate-100 rounded px-2 py-1" id="desc" name="desc" rows="3" class="resize-y"></textarea>
+        <span class="block text-base font-medium text-slate-700"
+          >Description</span
+        >
+        <textarea
+          class="peer-focus w-full bg-slate-100 rounded px-2 py-1"
+          name="desc"
+          rows="3"
+          class="resize-y"
+        ></textarea>
       </label>
-      
+
       <label class="block w-full text-base pt-5" for="list">Assign To</label>
-      <select class="block text-sm font-medium text-slate-700 w-full bg-slate-100 rounded px-2 py-1" id="list" name="list">
+      <select
+        class="block text-sm font-medium text-slate-700 w-full bg-slate-100 rounded px-2 py-1"
+        name="list"
+      >
         <option value="0">TODO</option>
         <option value="1">IN PROGRESS</option>
         <option value="2">REVIEW</option>
@@ -30,12 +45,22 @@
       </select>
 
       <div class="flex justify-end pt-5">
-        <button class="bg-slate-100 px-3 py-1 me-1 rounded" type="button" id="cancel">Cancel</button>
-        <button class="text-white bg-indigo-500 px-3 py-1 rounded" type="submit">Create</button>
+        <button
+          class="bg-slate-100 px-3 py-1 me-1 rounded"
+          type="button"
+          id="cancel"
+        >
+          Cancel
+        </button>
+        <button
+          class="text-white bg-indigo-500 px-3 py-1 rounded"
+          type="submit"
+        >
+          Create
+        </button>
       </div>
-
     </form>
 
-    <script src="../renderers/renderer-task.js"></script>
+    <script src="../renderers/renderer.addTask.js"></script>
   </body>
 </html>
