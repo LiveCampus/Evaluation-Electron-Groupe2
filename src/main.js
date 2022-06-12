@@ -81,7 +81,7 @@ app.on("ready", () => {
             }
           );
 
-          if (response !== false) {
+          if (response !== 1) {
             const notif = new Notification({
               title: "Tâche supprimée",
               body: "Cette tâche a été supprimée avec succès",
