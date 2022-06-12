@@ -1,4 +1,12 @@
-const { app, BrowserWindow, ipcMain, Notification, Menu, MenuItem} = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Notification,
+  Menu,
+  MenuItem,
+  dialog,
+} = require("electron");
 const path = require("path");
 const { createAddTaskWindow } = require("./addTask");
 
@@ -52,33 +60,47 @@ app.on("ready", () => {
     window.webContents.send("async:task:read", data);
   });
 
-  ipcMain.on('contextMenu:open', (e, data) => {
+  ipcMain.on("contextMenu:open", (e, data) => {
     const newMenu = new Menu();
     newMenu.append(
       new MenuItem({
-        label: 'Update',
-        click: () => console.log('modifier')
-     })
+        label: "Update",
+        click: () => console.log("modifier"),
+      })
     );
 
     newMenu.append(
-        new MenuItem({
-          label: 'Delete',
-          click: () => console.log('supprimer')
-        })
+      new MenuItem({
+        label: "Delete",
+        click: async () => {
+          const { response } = await dialog.showMessageBox(
+            BrowserWindow.fromWebContents(e.sender),
+            {
+              message: "Do you really want to delete this item ?",
+              buttons: ["Confirm", "Abort"],
+            }
+          );
+
+          if (response !== false) {
+            await tasks.deleteTask(data);
+
+            window.reload();
+          }
+        },
+      })
     );
 
     newMenu.popup({
-      window: BrowserWindow.fromWebContents(e.sender)
-    })
-  })
+      window: BrowserWindow.fromWebContents(e.sender),
+    });
+  });
 
   ipcMain.on("task:add", async (e, data) => {
     const notif = new Notification({
-      title: 'Tâche ajouté',
-      body: 'Bravo vous avez ajouté une nouvelle tâche',
-      icon: 'src/assets/images/Add.png'
-    })
+      title: "Tâche ajouté",
+      body: "Bravo vous avez ajouté une nouvelle tâche",
+      icon: "src/assets/images/Add.png",
+    });
 
     let res = await tasks.add(data);
 
@@ -86,7 +108,7 @@ app.on("ready", () => {
     window.webContents.send("task:add", res);
 
     BrowserWindow.fromWebContents(e.sender).close();
-    notif.show()
+    notif.show();
   });
 });
 

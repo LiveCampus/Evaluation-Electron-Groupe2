@@ -30,6 +30,18 @@ class Task {
       );
     });
   }
+
+  deleteTask(id) {
+    return new Promise((resolve, reject) => {
+      this.db.run("DELETE FROM Task WHERE id = ?", id, (err, _) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(true);
+        }
+      });
+    });
+  }
 }
 
 module.exports = Task;
