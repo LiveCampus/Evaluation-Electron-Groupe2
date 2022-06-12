@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Notification} = require("electron");
 const path = require("path");
 const { createAddTaskWindow } = require("./addTask");
 
@@ -36,6 +36,10 @@ app.on("ready", () => {
     createAddTaskWindow(window);
   });
 
+  ipcMain.on("window:addTask:close", (e) => {
+    BrowserWindow.fromWebContents(e.sender).close();
+  });
+
   ipcMain.on("list:read", async () => {
     let data = await lists.getAll();
 
@@ -48,11 +52,20 @@ app.on("ready", () => {
     window.webContents.send("async:task:read", data);
   });
 
-  ipcMain.on("task:add", async (_, data) => {
+  ipcMain.on("task:add", async (e, data) => {
+    const notif = new Notification({
+      title: 'Tâche ajouté',
+      body: 'Bravo vous avez ajouté une nouvelle tâche',
+      icon: 'src/assets/images/Add.png'
+    })
+
     let res = await tasks.add(data);
 
     window.reload();
-    window.webContents.send("async:task:add", res);
+    window.webContents.send("task:add", res);
+
+    BrowserWindow.fromWebContents(e.sender).close();
+    notif.show()
   });
 });
 

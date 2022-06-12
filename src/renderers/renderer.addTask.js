@@ -11,9 +11,4 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     window.api.send("task:add", data);
   });
-
-  window.api.receive("async:task:add", (data) => {
-    console.log("ok");
-    console.log(data);
-  });
 });
