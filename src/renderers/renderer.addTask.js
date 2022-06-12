@@ -11,4 +11,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     window.api.send("task:add", data);
   });
+
+  document.querySelector('#cancel').addEventListener('click', () => {
+    window.api.send('window:addTask:close')
+  })
 });
