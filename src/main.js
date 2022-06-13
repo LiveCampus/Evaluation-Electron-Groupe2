@@ -13,6 +13,7 @@ const { createAddTaskWindow } = require("./addTask");
 const Database = require("./model/Database");
 const List = require("./model/List");
 const Task = require("./model/Task");
+const { createUpdateTaskWindow } = require("./updateTask");
 
 const db = new Database("kanban.db");
 const lists = new List(db);
@@ -65,7 +66,7 @@ app.on("ready", () => {
     newMenu.append(
       new MenuItem({
         label: "Update",
-        click: () => console.log("modifier"),
+        click: () => createUpdateTaskWindow(window, data, tasks),
       })
     );
 

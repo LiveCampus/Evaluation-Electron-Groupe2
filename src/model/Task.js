@@ -15,6 +15,22 @@ class Task {
     });
   }
 
+  getOne(id) {
+    return new Promise((resolve, reject) => {
+      this.db.get(
+        "SELECT id, title, description, rank, idList FROM Task WHERE id = ?",
+        id,
+        (err, row) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(row);
+          }
+        }
+      );
+    });
+  }
+
   add(data) {
     return new Promise((resolve, reject) => {
       this.db.run(

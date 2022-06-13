@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Update a task</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <h1 class="p-3 text-lg font-bold">Update a Task</h1>
+    <hr />
+
+    <form class="p-5">
+      <label class="block w-full" for="title">
+        <span class="block text-base font-medium text-slate-700">Title</span>
+        <input
+          class="peer-focus w-full bg-slate-100 rounded px-2 py-1"
+          type="text"
+          name="title"
+          placeholder="Enter title"
+          required
+        />
+      </label>
+
+      <label class="block w-full pt-5" for="desc">
+        <span class="block text-base font-medium text-slate-700"
+          >Description</span
+        >
+        <textarea
+          class="peer-focus w-full bg-slate-100 rounded px-2 py-1 resize-y"
+          name="desc"
+          rows="3"
+        ></textarea>
+      </label>
+
+      <label class="block w-full text-base pt-5" for="list">Assign To</label>
+      <select
+        class="block text-sm font-medium text-slate-700 w-full bg-slate-100 rounded px-2 py-1"
+        name="list"
+      >
+        <option value="1">TODO</option>
+        <option value="2">IN PROGRESS</option>
+        <option value="3">REVIEW</option>
+        <option value="4">DONE</option>
+      </select>
+
+      <div class="flex justify-end pt-5">
+        <button
+          class="bg-slate-100 px-3 py-1 me-1 rounded"
+          type="button"
+          id="cancel"
+        >
+          Cancel
+        </button>
+        <button
+          class="text-white bg-indigo-500 px-3 py-1 rounded"
+          type="submit"
+        >
+          Create
+        </button>
+      </div>
+    </form>
+
+    <script src="../renderers/renderer.updateTask.js"></script>
+  </body>
+</html>
