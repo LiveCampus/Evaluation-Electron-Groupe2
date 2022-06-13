@@ -9,6 +9,7 @@ const {
 } = require("electron");
 const path = require("path");
 const { createAddTaskWindow } = require("./addTask");
+const { createShowTaskWindow } = require("./showTask");
 
 const Database = require("./model/Database");
 const List = require("./model/List");
@@ -51,6 +52,10 @@ app.on("ready", () => {
   });
 
   ipcMain.on("window:updateTask:close", (e) => {
+    BrowserWindow.fromWebContents(e.sender).close();
+  });
+
+  ipcMain.on("window:showTask:close", (e) => {
     BrowserWindow.fromWebContents(e.sender).close();
   });
 
@@ -105,6 +110,13 @@ app.on("ready", () => {
             notif.show();
           }
         },
+      })
+    );
+
+    newMenu.append(
+      new MenuItem({
+        label: "Show",
+        click: () => createShowTaskWindow(window, data, tasks),
       })
     );
 
