@@ -54,12 +54,20 @@ window.addEventListener("DOMContentLoaded", async () => {
       const newCard = document.createElement("div");
       const newBtn = document.createElement("button");
       let newDetail = document.createElement("img");
-      
-      newCard.classList.add("bg-white", "p-4", "w-full", "my-1", "flex", "justify-between", "items-center");
+
+      newCard.classList.add(
+        "bg-white",
+        "p-4",
+        "w-full",
+        "my-1",
+        "flex",
+        "justify-between",
+        "items-center"
+      );
       newBtn.classList.add("me-2", "pt-1");
-      newDetail.src = '../assets/images/Details.png';
+      newDetail.src = "../assets/images/Details.png";
       newDetail.classList.add("h-4");
-      newDetail.setAttribute("id", `${data[i].id}`)
+      newDetail.setAttribute("id", `${data[i].id}`);
 
       newCard.innerText = `${data[i].title}`;
 
@@ -76,11 +84,10 @@ window.addEventListener("DOMContentLoaded", async () => {
       list.append(newCard);
     }
 
-    Array.from(document.querySelectorAll('img')).map((img) => {
-      console.log(img)
-      img.addEventListener('click', () => {
-        window.api.send('contextMenu:open', img.getAttribute('id'))
-      })
-    })
+    Array.from(document.querySelectorAll("img")).map((img) => {
+      img.addEventListener("click", () => {
+        window.api.send("contextMenu:open", img.getAttribute("id"));
+      });
+    });
   });
 });
