@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "jest",
+    "test:w": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,7 @@
     "electron": "^19.0.4"
   },
   "dependencies": {
+    "jest": "^28.1.1",
     "sqlite3": "^5.0.8"
   }
 }
