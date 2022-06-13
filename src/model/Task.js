@@ -58,6 +58,23 @@ class Task {
       });
     });
   }
+
+  updateTask(id, data) {
+    return new Promise((resolve, reject) => {
+      this.db.run(
+        `UPDATE Task SET ${Object.keys(data)
+          .map((key) => `${key} = "${data[key].replace('"', "'")}"`)
+          .join(`, `)} WHERE id = ${id}`,
+        (err, data) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        }
+      );
+    });
+  }
 }
 
 module.exports = Task;

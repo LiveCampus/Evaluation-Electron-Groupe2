@@ -109,10 +109,25 @@ app.on("ready", () => {
       icon: "src/assets/images/Add.png",
     });
 
-    let res = await tasks.add(data);
+    await tasks.add(data);
 
     window.reload();
-    window.webContents.send("task:add", res);
+    //window.webContents.send("task:add", res);
+
+    BrowserWindow.fromWebContents(e.sender).close();
+    notif.show();
+  });
+
+  ipcMain.on("task:updated", async (e, { id, data }) => {
+    const notif = new Notification({
+      title: "Tâche modifiée",
+      body: "Bravo vous avez modifié la tâche avec succès",
+      icon: "src/assets/images/Update.png",
+    });
+
+    await tasks.updateTask(id, data);
+
+    window.reload();
 
     BrowserWindow.fromWebContents(e.sender).close();
     notif.show();
