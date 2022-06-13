@@ -22,4 +22,8 @@ window.addEventListener("DOMContentLoaded", () => {
       window.api.send("task:updated", { id: data.id, data: modifiedData });
     });
   });
+
+  document.querySelector("#cancel").addEventListener("click", () => {
+    window.api.send("window:updateTask:close");
+  });
 });

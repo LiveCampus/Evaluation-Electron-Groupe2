@@ -49,6 +49,10 @@ app.on("ready", () => {
     BrowserWindow.fromWebContents(e.sender).close();
   });
 
+  ipcMain.on("window:updateTask:close", (e) => {
+    BrowserWindow.fromWebContents(e.sender).close();
+  });
+
   ipcMain.on("list:read", async () => {
     let data = await lists.getAll();
 
