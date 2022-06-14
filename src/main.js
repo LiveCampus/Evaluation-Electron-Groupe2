@@ -14,7 +14,6 @@ const { createShowTaskWindow } = require("./showTask");
 const Database = require("./model/Database");
 const List = require("./model/List");
 const Task = require("./model/Task");
-const updateTask = require("./updateTask");
 const { createUpdateTaskWindow } = require("./updateTask");
 
 const db = new Database("kanban.db");
@@ -71,8 +70,8 @@ app.on("ready", () => {
     window.webContents.send("async:task:read", data);
   });
 
-  ipcMain.on("task:moveToColumn", async (_, data) => {
-    await tasks.updateTask(data.id, { idList: data.moveTo });
+  ipcMain.on("task:move", async (_, data) => {
+    await tasks.updateRank(data);
 
     window.reload();
   });

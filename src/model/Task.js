@@ -75,6 +75,53 @@ class Task {
       );
     });
   }
+
+  updateRank({ taskId, listId, rank }) {
+    return new Promise((resolve, reject) => {
+      this.db.get(
+        "SELECT rank FROM Task WHERE id = ?",
+        taskId,
+        (err, { rank: previousRank }) => {
+          if (err) {
+            reject(err);
+          } else {
+            this.db.run(
+              `UPDATE Task SET idList = ${listId}, rank = ${rank} WHERE id = ${taskId}`,
+              (err, _) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  if (previousRank > rank) {
+                    this.db.run(
+                      `UPDATE Task SET rank = rank + 1 WHERE idList = ${listId} AND rank >= ${rank} AND rank < ${previousRank} AND id != ${taskId}`,
+                      (err, data) => {
+                        if (err) {
+                          reject(err);
+                        } else {
+                          resolve(data);
+                        }
+                      }
+                    );
+                  } else {
+                    this.db.run(
+                      `UPDATE Task SET rank = rank - 1 WHERE idList = ${listId} AND rank <= ${rank} AND rank > ${previousRank} AND id != ${taskId}`,
+                      (err, data) => {
+                        if (err) {
+                          reject(err);
+                        } else {
+                          resolve(data);
+                        }
+                      }
+                    );
+                  }
+                }
+              }
+            );
+          }
+        }
+      );
+    });
+  }
 }
 
 module.exports = Task;
